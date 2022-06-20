@@ -9,13 +9,18 @@ class App extends React.Component {
     };
   }
 
+handleSubmit = (event) => {
+  event.preventDefault();
+
+}
+
 render () {
 
   return (
     <>
     <h1>City Explorer</h1>
-    <form>
-      <button>Explore!</button>
+    <form onSubmit={this.handleSubmit}>
+      <button type="submit">Explore!</button>
     </form>
     </>
   );
