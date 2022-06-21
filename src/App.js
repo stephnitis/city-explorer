@@ -1,7 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
 // import Container from 'react-bootstrap/Container';
 import './App.css';
 import Map from './Map.js';
@@ -43,28 +41,21 @@ class App extends React.Component {
     });
   }
 
-
-
-
-
   render() {
     console.log('location:', this.state.location);
-    
+
     return (
       <>
-        <h1>City Explorer</h1>
-        <Form onSubmit={this.handleExplore}>
-          <Form.Label>Pick a City</Form.Label>
-          <Form.Control type="text" onInput={this.handleCityInput}/>
-          <Button type="submit">Explore!</Button>
-        </Form>
         <Map
-        lat={this.state.lat}
-        lon={this.state.lon}
-        displayName={this.state.displayName}
+          handleCityInput={this.handleCityInput}
+          handleExplore={this.handleExplore}
+          searchQuery={this.state.searchQuery}
+          lat={this.state.lat}
+          lon={this.state.lon}
+          displayName={this.state.displayName}
         />
       </>
-      
+
     );
 
   }
