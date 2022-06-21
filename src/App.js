@@ -15,6 +15,7 @@ class App extends React.Component {
       mapImg: '',
       lat: '',
       lon: '',
+      displayName: '',
     }
   }
 
@@ -37,7 +38,8 @@ class App extends React.Component {
     this.setState({
       location: cityInput.data[0],
       lon: cityInput.data[0].lon,
-      lat: cityInput.data[0].lat
+      lat: cityInput.data[0].lat,
+      displayName: cityInput.data[0].display_name
     });
   }
 
@@ -47,9 +49,6 @@ class App extends React.Component {
 
   render() {
     console.log('location:', this.state.location);
-    console.log('lon', typeof(this.state.lon));
-    console.log('lat', this.state.lat);
-    console.log('mapImg', this.state.mapImg);
     
     return (
       <>
@@ -62,7 +61,7 @@ class App extends React.Component {
         <Map
         lat={this.state.lat}
         lon={this.state.lon}
-        searchQuery={this.state.searchQuery}
+        displayName={this.state.displayName}
         />
       </>
       

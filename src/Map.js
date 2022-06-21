@@ -10,7 +10,7 @@ class Map extends React.Component {
     }
   }
 
-  renderMap = async () => {
+  findMap = async () => {
     // event.preventDefault();
     
     let mapUrl = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.props.lat},${this.props.lon}&zoom=10`;
@@ -19,18 +19,17 @@ class Map extends React.Component {
     this.setState({
       mapUrl: mapUrl
     
-    });
-    
+    });    
   }
 
+
   render() {
-  this.renderMap();
-  console.log(this.state.mapImg);
+  this.findMap();
     return(
       <>
      <img className="img-fluid" 
             src={this.state.mapUrl}
-            alt={this.props.searchQuery}
+            alt={this.props.displayName}
          />
       </>
     )
