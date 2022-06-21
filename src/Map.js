@@ -9,6 +9,7 @@ class Map extends React.Component {
     super(props);
     this.state = {
       mapUrl: '',
+      errorMessage: ''
       // displayMap: 'false'
     }
   }
@@ -25,19 +26,6 @@ class Map extends React.Component {
 
     });
   }
-
-  // handleMapDisplay = (event) => {
-  //   event.preventDefault();
-  //   display = event.target.value
-  //    if (this.props.searchQuery ===  ){
-  //    return this.findMap();
-  //    } else (this.props.searchQuery === ) {
-
-  //    }
-
-  //    };
-
-  // }
 
   render() {
     this.findMap();
