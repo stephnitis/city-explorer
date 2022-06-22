@@ -1,15 +1,24 @@
-// const { default: axios } = require("axios")
+import React from 'react';
+// import Alert from 'react-bootstrap/Alert'
+import ListGroup from 'react-bootstrap/ListGroup';
 
-// handleGetWeather = async () => {
-//   let url = `http://localhost:3001/weatherData?searchQuery=${this.state.searchQuery}`
-  
-//   try{
-//     let weatherData = await axios.get(url);
-//     console.log(weatherData.data);
-//   } catch (error) {
-//     console.log(error);
 
-//   }
-// }
+class Weather extends React.Component {
 
-// this.handleGetWeather();
+  render () {
+    return(
+      <>
+      <ListGroup variant="success"> 
+          <ListGroup.Item>Date: {this.props.datetime}
+          </ListGroup.Item>
+          <ListGroup.Item>Forecast: {this.props.description}
+          </ListGroup.Item>
+        </ListGroup>
+      </>
+    )
+  }
+
+}
+
+export default Weather;
+

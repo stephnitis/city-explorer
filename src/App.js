@@ -6,6 +6,7 @@ import Image from 'react-bootstrap/Image'
 import Alert from 'react-bootstrap/Alert'
 import ListGroup from 'react-bootstrap/ListGroup';
 import './App.css';
+import Weather from './Weather.js';
 // import Container from 'react-bootstrap/Container';
 // import Map from './Map.js';
 
@@ -20,7 +21,9 @@ class App extends React.Component {
       errorMsg: '',
       lat: '',
       lon: '',
-      mapImg: ''
+      mapImg: '',
+      datetime: '',
+      description: '',
     }
   }
 
@@ -59,7 +62,11 @@ class App extends React.Component {
     
     try{
       let weatherData = await axios.get(url);
-      console.log(weatherData.data);
+      console.log('weather:', weatherData.data);
+      this.setState({
+        datetime: weatherData.data[0].datetime,
+        description: weatherData.data[1].description,
+      })
     } catch (error) {
       console.log(error);
   
@@ -68,9 +75,10 @@ class App extends React.Component {
 
   render() {
     // console.log('cityInput:', this.state.cityInput);
-
+    // console.log('description', this.state.description)
     return (
       <>
+
       <h1>City Explorer</h1>
         <Form onSubmit={this.handleExplore}>
           <Form.Label>Pick a City</Form.Label>
@@ -93,8 +101,16 @@ class App extends React.Component {
         src={this.state.mapImg}
         alt={this.state.displayName}>
         </Image>
+
+        <Weather 
+        datetime={this.state.datetime}
+        description={this.state.description}
+      />
+
      </>}
       </>
+      
+    
 
     );
 
