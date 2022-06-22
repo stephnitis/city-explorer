@@ -69,7 +69,10 @@ class App extends React.Component {
       })
     } catch (error) {
       console.log(error);
-  
+      this.setState({
+        error: true,
+        errorMsg: `Error: ${error.message}. No access to this data.`      
+      })  
     }
   }
 
@@ -105,6 +108,8 @@ class App extends React.Component {
         <Weather 
         datetime={this.state.datetime}
         description={this.state.description}
+        error={this.state.error}
+        errorMsg={this.state.errorMsg}
       />
 
      </>}
