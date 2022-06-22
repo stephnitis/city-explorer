@@ -20,6 +20,18 @@ Bringing back the browser map finder, we're coming for you MapQuest!
 ## Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
 
+### Lab 06 WRRC:
+
+![WRRC of Lab 06](./img/lab06wrrc.jpg)
+
+### Lab 07 WRRC:
+
+![WRRC of Lab 07](./img/lab%2007%20city-explorer1024_1.jpg)
+
+### Lab 08 WRRC:
+
+![WRRC of Lab 08](./img/WRRC%20lab08.jpeg)
+
 ## Time Estimates:
 
 Name of feature: 

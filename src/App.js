@@ -51,6 +51,19 @@ class App extends React.Component {
         errorMsg: `Error: ${error.message}. Please Refresh & Try Again.`      
       })
     } 
+    this.handleGetWeather();
+  }
+
+  handleGetWeather = async () => {
+    let url = `http://localhost:3001/weatherData?searchQuery=${this.state.searchQuery}`
+    
+    try{
+      let weatherData = await axios.get(url);
+      console.log(weatherData.data);
+    } catch (error) {
+      console.log(error);
+  
+    }
   }
 
   render() {
