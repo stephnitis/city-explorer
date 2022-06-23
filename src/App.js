@@ -6,7 +6,7 @@ import Image from 'react-bootstrap/Image'
 import Alert from 'react-bootstrap/Alert'
 import ListGroup from 'react-bootstrap/ListGroup';
 import './App.css';
-import Weather from './Weather.js';
+// import Weather from './Weather.js';
 // import Container from 'react-bootstrap/Container';
 // import Map from './Map.js';
 
@@ -24,6 +24,7 @@ class App extends React.Component {
       mapImg: '',
       datetime: '',
       description: '',
+      showWeather: false,
     }
   }
 
@@ -35,17 +36,24 @@ class App extends React.Component {
 
   handleExplore = async (event) => {
     event.preventDefault();
-    try{
+    try {
     let url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.searchQuery}&format=json`;
     let cityInput = await axios.get(url);
     console.log(cityInput.data)
+
     let mapImg = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${cityInput.data[0].lat},${cityInput.data[0].lon}&zoom=13`;
+
+    let weatherURL = `${process.env.REACT_APP_SERVER}/weather?city=${cityInput.data[0].display_name}&lat=${cityInput.data[0].lat}&lon=${cityInput.data[0].lon}`;
+    let weather = await axios.get(weatherURL);
+    
     this.setState({
       cityInput: cityInput.data[0],
       displayName: cityInput.data[0].display_name,
       lat: cityInput.data[0].lat,
       lon: cityInput.data[0].lon,
       mapImg: mapImg,
+      weather: weather.data,
+      showWeather: true,
     });
     } catch (error) {
       console.log('error', error)
@@ -54,31 +62,32 @@ class App extends React.Component {
         errorMsg: `Error: ${error.message}. Please Refresh & Try Again.`      
       })
     } 
-    this.handleGetWeather();
+    // this.handleGetWeather();
   }
 
-  handleGetWeather = async () => {
-    let url = `http://localhost:3001/weatherData?searchQuery=${this.state.searchQuery}`
+  // handleGetWeather = async () => {
+  //   let url = `http://localhost:3001/weatherData?searchQuery=${this.state.searchQuery}`
     
-    try{
-      let weatherData = await axios.get(url);
-      console.log('weather:', weatherData.data);
-      this.setState({
-        datetime: weatherData.data[0].datetime,
-        description: weatherData.data[1].description,
-      })
-    } catch (error) {
-      console.log(error);
-      this.setState({
-        error: true,
-        errorMsg: `Error: ${error.message}. No access to this data.`      
-      })  
-    }
-  }
+  //   try{
+  //     let weatherData = await axios.get(url);
+  //     console.log('weather:', weatherData.data);
+  //     this.setState({
+  //       datetime: weatherData.data[0].datetime,
+  //       description: weatherData.data[1].description,
+  //     })
+  //   } catch (error) {
+  //     console.log(error);
+  //     this.setState({
+  //       error: true,
+  //       errorMsg: `Error: ${error.message}. No access to this data.`      
+  //     })  
+  //   }
+  // }
 
   render() {
     // console.log('cityInput:', this.state.cityInput);
     // console.log('description', this.state.description)
+    console.log('weather:', this.state.weather);
     return (
       <>
 
@@ -105,12 +114,12 @@ class App extends React.Component {
         alt={this.state.displayName}>
         </Image>
 
-        <Weather 
+        {/* <Weather 
         datetime={this.state.datetime}
         description={this.state.description}
         error={this.state.error}
         errorMsg={this.state.errorMsg}
-      />
+      /> */}
 
      </>}
       </>
