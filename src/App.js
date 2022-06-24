@@ -6,6 +6,7 @@ import Image from 'react-bootstrap/Image'
 import Alert from 'react-bootstrap/Alert'
 import ListGroup from 'react-bootstrap/ListGroup';
 import './App.css';
+import Movies from './Movies';
 // import Weather from './Weather.js';
 // import Container from 'react-bootstrap/Container';
 // import Map from './Map.js';
@@ -22,9 +23,11 @@ class App extends React.Component {
       lat: '',
       lon: '',
       mapImg: '',
-      datetime: '',
-      description: '',
+      // datetime: '',
+      // description: '',
       showWeather: false,
+      weather: [],
+      movieTitles: [],
     }
   }
 
@@ -37,37 +40,48 @@ class App extends React.Component {
   handleExplore = async (event) => {
     event.preventDefault();
     try {
-    let url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.searchQuery}&format=json`;
-    let cityInput = await axios.get(url);
-    console.log(cityInput.data)
+      let url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.searchQuery}&format=json`;
+      let cityInput = await axios.get(url);
 
-    let mapImg = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${cityInput.data[0].lat},${cityInput.data[0].lon}&zoom=13`;
 
-    let weatherURL = `${process.env.REACT_APP_SERVER}/weather?city=${cityInput.data[0].display_name}&lat=${cityInput.data[0].lat}&lon=${cityInput.data[0].lon}`;
-    let weather = await axios.get(weatherURL);
-    
-    this.setState({
-      cityInput: cityInput.data[0],
-      displayName: cityInput.data[0].display_name,
-      lat: cityInput.data[0].lat,
-      lon: cityInput.data[0].lon,
-      mapImg: mapImg,
-      weather: weather.data,
-      showWeather: true,
-    });
+      let mapImg = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${cityInput.data[0].lat},${cityInput.data[0].lon}&zoom=13`;
+
+      let weatherURL = `${process.env.REACT_APP_SERVER}/weather?lat=${cityInput.data[0].lat}&lon=${cityInput.data[0].lon}`;
+
+      let weather = await axios.get(weatherURL);
+      // console.log(weather);
+
+      let movieURL = `${process.env.REACT_APP_SERVER}/movies?searchQuery=${this.state.searchQuery}`;
+      let movieTitles = await axios.get(movieURL);
+        console.log('movie titles', movieTitles);
+
+      this.setState({
+        cityInput: cityInput.data[0],
+        displayName: cityInput.data[0].display_name,
+        lat: cityInput.data[0].lat,
+        lon: cityInput.data[0].lon,
+        mapImg: mapImg,
+        weather: weather.data,
+        date: weather.data[0].datetime,
+        forecast: weather.data[0].description,
+        showWeather: true,
+        movieTitles: movieTitles.data,
+      });
+
     } catch (error) {
       console.log('error', error)
       this.setState({
         error: true,
-        errorMsg: `Error: ${error.message}. Please Refresh & Try Again.`      
+        errorMsg: `Error: ${error.message}. Please Refresh & Try Again.`
       })
-    } 
+    }
     // this.handleGetWeather();
   }
 
+
   // handleGetWeather = async () => {
   //   let url = `http://localhost:3001/weatherData?searchQuery=${this.state.searchQuery}`
-    
+
   //   try{
   //     let weatherData = await axios.get(url);
   //     console.log('weather:', weatherData.data);
@@ -83,15 +97,14 @@ class App extends React.Component {
   //     })  
   //   }
   // }
+  
 
   render() {
-    // console.log('cityInput:', this.state.cityInput);
-    // console.log('description', this.state.description)
-    console.log('weather:', this.state.weather);
+    // console.log('movie titles state', this.state.movieTitles);
     return (
       <>
 
-      <h1>City Explorer</h1>
+        <h1>City Explorer</h1>
         <Form onSubmit={this.handleExplore}>
           <Form.Label>Pick a City</Form.Label>
           <Form.Control type="text" onInput={this.handleCityInput} />
@@ -99,33 +112,39 @@ class App extends React.Component {
         </Form>
         {this.state.error === true
           ? <Alert>{this.state.errorMsg}</Alert>
-          : 
-        <> 
-        <ListGroup variant="success"> 
-          <ListGroup.Item>City: {this.state.displayName}
-          </ListGroup.Item>
-          <ListGroup.Item>Latitude: {this.state.lat}
-          </ListGroup.Item>
-          <ListGroup.Item>Longitude: {this.state.lon}          
-          </ListGroup.Item>
-        </ListGroup>
-        <Image 
-        src={this.state.mapImg}
-        alt={this.state.displayName}>
-        </Image>
+          :
+          <>
+            <ListGroup variant="success">
+              <ListGroup.Item>City: {this.state.displayName}
+              </ListGroup.Item>
+              <ListGroup.Item>Latitude: {this.state.lat}
+              </ListGroup.Item>
+              <ListGroup.Item>Longitude: {this.state.lon}
+              </ListGroup.Item>
+              <ListGroup.Item>Date: {this.state.date}
+              </ListGroup.Item>
+              <ListGroup.Item>Forecast: {this.state.forecast}
+              </ListGroup.Item>
+            </ListGroup>
+            <Image
+              src={this.state.mapImg}
+              alt={this.state.displayName}>
+            </Image>
+          </>}
+          <Movies
+          movieTitles={this.state.movieTitles}
+          />
+      </>
 
-        {/* <Weather 
+// {this.state.weather.data.map((day, idx) => { return <ul key={idx}><li>Date: {day.date}</li><li>Forecast: {day.description}</li></ul> })}
+
+
+      /* <Weather 
         datetime={this.state.datetime}
         description={this.state.description}
         error={this.state.error}
         errorMsg={this.state.errorMsg}
-      /> */}
-
-     </>}
-      </>
-      
-    
-
+      /> */
     );
 
   }
