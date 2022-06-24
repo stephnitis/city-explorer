@@ -6,6 +6,7 @@ import Image from 'react-bootstrap/Image'
 import Alert from 'react-bootstrap/Alert'
 import ListGroup from 'react-bootstrap/ListGroup';
 import './App.css';
+import Movies from './Movies';
 // import Weather from './Weather.js';
 // import Container from 'react-bootstrap/Container';
 // import Map from './Map.js';
@@ -26,6 +27,7 @@ class App extends React.Component {
       // description: '',
       showWeather: false,
       weather: [],
+      movieTitles: [],
     }
   }
 
@@ -45,17 +47,27 @@ class App extends React.Component {
       let mapImg = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${cityInput.data[0].lat},${cityInput.data[0].lon}&zoom=13`;
 
       let weatherURL = `${process.env.REACT_APP_SERVER}/weather?lat=${cityInput.data[0].lat}&lon=${cityInput.data[0].lon}`;
+
       let weather = await axios.get(weatherURL);
-      console.log(weather);
+      // console.log(weather);
+
+      let movieURL = `${process.env.REACT_APP_SERVER}/movies?searchQuery=${this.state.searchQuery}`;
+      let movieTitles = await axios.get(movieURL);
+        console.log('movie titles', movieTitles);
+
       this.setState({
         cityInput: cityInput.data[0],
         displayName: cityInput.data[0].display_name,
         lat: cityInput.data[0].lat,
         lon: cityInput.data[0].lon,
         mapImg: mapImg,
-        weather: weather,
+        weather: weather.data,
+        date: weather.data[0].datetime,
+        forecast: weather.data[0].description,
         showWeather: true,
+        movieTitles: movieTitles.data,
       });
+
     } catch (error) {
       console.log('error', error)
       this.setState({
@@ -85,9 +97,10 @@ class App extends React.Component {
   //     })  
   //   }
   // }
+  
 
   render() {
-
+    // console.log('movie titles state', this.state.movieTitles);
     return (
       <>
 
@@ -108,13 +121,19 @@ class App extends React.Component {
               </ListGroup.Item>
               <ListGroup.Item>Longitude: {this.state.lon}
               </ListGroup.Item>
+              <ListGroup.Item>Date: {this.state.date}
+              </ListGroup.Item>
+              <ListGroup.Item>Forecast: {this.state.forecast}
+              </ListGroup.Item>
             </ListGroup>
             <Image
               src={this.state.mapImg}
               alt={this.state.displayName}>
             </Image>
           </>}
-
+          <Movies
+          movieTitles={this.state.movieTitles}
+          />
       </>
 
 // {this.state.weather.data.map((day, idx) => { return <ul key={idx}><li>Date: {day.date}</li><li>Forecast: {day.description}</li></ul> })}
