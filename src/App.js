@@ -2,13 +2,9 @@ import React from 'react';
 import axios from 'axios';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import Image from 'react-bootstrap/Image'
-import Alert from 'react-bootstrap/Alert'
-import ListGroup from 'react-bootstrap/ListGroup';
 import './App.css';
-import Movies from './Movies';
-// import Weather from './Weather.js';
-// import Container from 'react-bootstrap/Container';
+import Movies from './components/Movies';
+import Weather from './components/Weather.js';
 // import Map from './Map.js';
 
 class App extends React.Component {
@@ -49,11 +45,10 @@ class App extends React.Component {
       let weatherURL = `${process.env.REACT_APP_SERVER}/weather?lat=${cityInput.data[0].lat}&lon=${cityInput.data[0].lon}`;
 
       let weather = await axios.get(weatherURL);
-      // console.log(weather);
-
+ 
       let movieURL = `${process.env.REACT_APP_SERVER}/movies?searchQuery=${this.state.searchQuery}`;
       let movieTitles = await axios.get(movieURL);
-        console.log('movie titles', movieTitles);
+      console.log('movie titles', movieTitles);
 
       this.setState({
         cityInput: cityInput.data[0],
@@ -97,10 +92,10 @@ class App extends React.Component {
   //     })  
   //   }
   // }
-  
+
 
   render() {
-    // console.log('movie titles state', this.state.movieTitles);
+ 
     return (
       <>
 
@@ -110,43 +105,21 @@ class App extends React.Component {
           <Form.Control type="text" onInput={this.handleCityInput} />
           <Button type="submit">Explore!</Button>
         </Form>
-        {this.state.error === true
-          ? <Alert>{this.state.errorMsg}</Alert>
-          :
-          <>
-            <ListGroup variant="success">
-              <ListGroup.Item>City: {this.state.displayName}
-              </ListGroup.Item>
-              <ListGroup.Item>Latitude: {this.state.lat}
-              </ListGroup.Item>
-              <ListGroup.Item>Longitude: {this.state.lon}
-              </ListGroup.Item>
-              <ListGroup.Item>Date: {this.state.date}
-              </ListGroup.Item>
-              <ListGroup.Item>Forecast: {this.state.forecast}
-              </ListGroup.Item>
-            </ListGroup>
-            <Image
-              src={this.state.mapImg}
-              alt={this.state.displayName}>
-            </Image>
-          </>}
-          <Movies
+        <Weather
+          date={this.state.datetime}
+          description={this.state.description}
+          forecast={this.state.forecast}
+          error={this.state.error}
+          errorMsg={this.state.errorMsg}
+          lat={this.state.lat}
+          lon={this.state.lon}
+          mapImg={this.state.mapImg}
+        />
+        <Movies
           movieTitles={this.state.movieTitles}
-          />
+        />
       </>
-
-// {this.state.weather.data.map((day, idx) => { return <ul key={idx}><li>Date: {day.date}</li><li>Forecast: {day.description}</li></ul> })}
-
-
-      /* <Weather 
-        datetime={this.state.datetime}
-        description={this.state.description}
-        error={this.state.error}
-        errorMsg={this.state.errorMsg}
-      /> */
     );
-
   }
 }
 
