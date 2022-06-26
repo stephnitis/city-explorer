@@ -46,7 +46,7 @@ class App extends React.Component {
       let weatherURL = `${process.env.REACT_APP_SERVER}/weather?lat=${cityInput.data[0].lat}&lon=${cityInput.data[0].lon}`;
 
       let weather = await axios.get(weatherURL);
- 
+
       let movieURL = `${process.env.REACT_APP_SERVER}/movies?searchQuery=${this.state.searchQuery}`;
       let movieTitles = await axios.get(movieURL);
       console.log('movie titles', movieTitles);
@@ -96,23 +96,26 @@ class App extends React.Component {
 
 
   render() {
- 
+
     return (
       <>
         <div class="font-effect-neon">
-        <h1>City Explorer</h1></div>
+
+          <h1>City Explorer</h1></div>
+
         <Container className="d-flex align-items-center justify-content-center text-center">
-        <Form 
-        
-        onSubmit={this.handleExplore}>
-          <Form.Control
-          className='mb-3 mt-3'
-          box-sizing='border-box'
-          type="text" 
-          onInput={this.handleCityInput}
-          placeholder="Enter City Name" />
-          <Button className='mb-3' variant="outline-dark" type="submit">Explore!</Button>
-        </Form>
+
+          <Form
+            onSubmit={this.handleExplore}>
+            <Form.Control
+              className='mb-3 mt-3'
+              box-sizing='border-box'
+              type="text"
+              onInput={this.handleCityInput}
+              placeholder="Enter City Name" />
+            <Button className='mb-3' variant="outline-dark" type="submit">Explore!</Button>
+          </Form>
+
         </Container>
         <Weather
           date={this.state.date}
@@ -134,6 +137,7 @@ class App extends React.Component {
           displayName={this.state.displayName}
 
         />
+
         <Movies
           movieTitles={this.state.movieTitles}
         />
