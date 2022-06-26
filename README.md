@@ -32,14 +32,52 @@ Bringing back the browser map finder, we're coming for you MapQuest!
 
 ![WRRC of Lab 08](./img/WRRC%20lab08.jpeg)
 
+### Lab 09 WRRC:
+
+![WRRC of Lab 08](./img/wrrc-lab-09.jpeg)
+
+### Lab 10 WRRC:
+
+![WRRC of Lab 08](./img/lab%2010%20wrrc.jpeg)
+
 ## Time Estimates:
 
-Name of feature: 
+Name of feature: LocationIQ API City & Map Disply
 
-Estimate of time needed to complete: 
+Estimate of time needed to complete: 4 hours
 
-Start time: 
+Start time: Monday 1200 hours
 
-Finish time: 
+Finish time: Tueday 1600 hours
 
-Actual time needed to complete:
+Actual time needed to complete: 28 hours.
+
+Name of feature: Local Server and JSON Data Weather for 3 cities
+
+Estimate of time needed to complete: 4 hours
+
+Start time: Tuesday 1600 hours
+
+Finish time: Wednesday 1600 hours
+
+Actual time needed to complete: 24 hours but only with Audrey demoing my code for code review.
+
+Name of feature: Weather & Movie API
+
+Estimate of time needed to complete: 36 hours based on current standing.
+
+Start time: Wednesday 1600 hours
+
+Finish time: Thursday 1800 hours
+
+Actual time needed to complete: 24 hours. Finally a good time estimate.
+
+Name of feature: CACHE
+
+Estimate of time needed to complete: 2 hours
+
+Start time: Friday 1500 hours
+
+Finish time: Friday 1700 hours
+
+Actual time needed to complete: 2 hours

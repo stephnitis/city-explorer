@@ -6,7 +6,11 @@ import AccordionHeader from 'react-bootstrap/esm/AccordionHeader';
 import AccordionBody from 'react-bootstrap/esm/AccordionBody';
 class Movies extends React.Component {
 
- 
+
+import ListGroup from 'react-bootstrap/ListGroup';
+
+class Movies extends React.Component {
+
 
   render() {
     return (
@@ -22,11 +26,14 @@ class Movies extends React.Component {
               </AccordionBody>
            </Card>
           </Accordion>
+          <ListGroup key={idx}>
+            <ListGroup.Item>{film.title}</ListGroup.Item>
+            <ListGroup.Item>{film.overview}</ListGroup.Item>
+          </ListGroup>
         ))
      } </> )
      
   };
 }
-
 
 export default Movies;
