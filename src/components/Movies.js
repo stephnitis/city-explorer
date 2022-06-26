@@ -8,6 +8,8 @@ import Container from 'react-bootstrap/Container';
 class Movies extends React.Component {
 
 
+class Movies extends React.Component {
+
 
   render() {
     return (
@@ -22,11 +24,14 @@ class Movies extends React.Component {
               <Card.Body>{film.overview}</Card.Body>
             </AccordionBody>
           </Accordion>
+          <ListGroup key={idx}>
+            <ListGroup.Item>{film.title}</ListGroup.Item>
+            <ListGroup.Item>{film.overview}</ListGroup.Item>
+          </ListGroup>
         ))
         } </Container></>)
 
   };
 }
-
 
 export default Movies;

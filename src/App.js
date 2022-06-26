@@ -6,7 +6,7 @@ import './App.css';
 import Movies from './components/Movies';
 import Weather from './components/Weather.js';
 import { Container } from 'react-bootstrap';
-// import Map from './Map.js';
+
 
 class App extends React.Component {
   constructor(props) {
@@ -119,6 +119,14 @@ class App extends React.Component {
         </Container>
         <Weather
           date={this.state.date}
+        <h1>City Explorer</h1>
+        <Form onSubmit={this.handleExplore}>
+          <Form.Label>Pick a City</Form.Label>
+          <Form.Control type="text" onInput={this.handleCityInput} />
+          <Button type="submit">Explore!</Button>
+        </Form>
+        <Weather
+          date={this.state.date}
           description={this.state.description}
           forecast={this.state.forecast}
           error={this.state.error}
@@ -127,6 +135,7 @@ class App extends React.Component {
           lon={this.state.lon}
           mapImg={this.state.mapImg}
           displayName={this.state.displayName}
+
         />
 
         <Movies

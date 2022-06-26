@@ -2,6 +2,8 @@ import React from 'react';
 import Alert from 'react-bootstrap/Alert'
 import Container from 'react-bootstrap/Container';
 import { Card } from 'react-bootstrap';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Image from 'react-bootstrap/Image';
 
 
 
@@ -42,6 +44,22 @@ class Weather extends React.Component {
                 </Card.Body>
               </Card>
             </Container>
+            <ListGroup variant="success">
+              <ListGroup.Item>City: {this.props.displayName}
+              </ListGroup.Item>
+              <ListGroup.Item>Latitude: {this.props.lat}
+              </ListGroup.Item>
+              <ListGroup.Item>Longitude: {this.props.lon}
+              </ListGroup.Item>
+              <ListGroup.Item>Date: {this.props.date}
+              </ListGroup.Item>
+              <ListGroup.Item>Forecast: {this.props.forecast}
+              </ListGroup.Item>
+            </ListGroup>
+            <Image
+              src={this.props.mapImg}
+              alt={this.props.displayName}>
+            </Image>
           </>}
       </>
 
