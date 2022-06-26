@@ -1,4 +1,12 @@
 import React from 'react';
+// import ListGroup from 'react-bootstrap/ListGroup';
+import Accordion from 'react-bootstrap/Accordion'
+import { Card } from 'react-bootstrap';
+import AccordionHeader from 'react-bootstrap/esm/AccordionHeader';
+import AccordionBody from 'react-bootstrap/esm/AccordionBody';
+class Movies extends React.Component {
+
+
 import ListGroup from 'react-bootstrap/ListGroup';
 
 class Movies extends React.Component {
@@ -8,6 +16,16 @@ class Movies extends React.Component {
     return (
       <>
       {this.props.movieTitles.map((film, idx) => (
+          <Accordion defaultActiveKey={idx}>
+            <Card className='w-100 p-3'>
+              <Card.Header>
+            <AccordionHeader eventKey={idx}>{film.title}</AccordionHeader>
+              </Card.Header>        
+            <AccordionBody>
+              <Card.Body>{film.overview}</Card.Body>
+              </AccordionBody>
+           </Card>
+          </Accordion>
           <ListGroup key={idx}>
             <ListGroup.Item>{film.title}</ListGroup.Item>
             <ListGroup.Item>{film.overview}</ListGroup.Item>
@@ -17,7 +35,5 @@ class Movies extends React.Component {
      
   };
 }
-
-{/* // {this.props.movieTitles.data.map((film, idx) => { return <ul key={idx}><li>Title: {film.title}</li><li>{film.poster_path}</li></ul> })} */ }
 
 export default Movies;

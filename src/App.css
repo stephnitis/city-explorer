@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Fascinate&effect=neon');
+
+body {
+  background-image: url('/img/meiying-ng-OrwkD-iWgqg-unsplash.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: 100%;
+  background-size: 100% 100%;
+  align-self: center;
+  align-content: center;
+  flex-direction: row;
+}
+
+h1 {
+  font-family: 'Fascinate', cursive;
+  font-size: 5vw;
+  color: rgba(25, 237, 198, 0.697);
+  -webkit-text-stroke: 2px;
+  -webkit-text-stroke-color:rgb(78, 19, 119);
+  margin: 2vw;
+}
+
+/* .input-group {
+  width: 90% !important;
+  display: flex;
+  align-self: center;
+  align-content: center;
+}
+
+.form-control {
+  width: 50% !important;
+} */

@@ -5,7 +5,8 @@ import Button from 'react-bootstrap/Button'
 import './App.css';
 import Movies from './components/Movies';
 import Weather from './components/Weather.js';
-// import Map from './Map.js';
+import { Container } from 'react-bootstrap';
+
 
 class App extends React.Component {
   constructor(props) {
@@ -98,7 +99,23 @@ class App extends React.Component {
  
     return (
       <>
-
+        <div class="font-effect-neon">
+        <h1>City Explorer</h1></div>
+        <Container className="d-flex align-items-center justify-content-center text-center">
+        <Form 
+        
+        onSubmit={this.handleExplore}>
+          <Form.Control
+          className='mb-3 mt-3'
+          box-sizing='border-box'
+          type="text" 
+          onInput={this.handleCityInput}
+          placeholder="Enter City Name" />
+          <Button className='mb-3' variant="outline-dark" type="submit">Explore!</Button>
+        </Form>
+        </Container>
+        <Weather
+          date={this.state.date}
         <h1>City Explorer</h1>
         <Form onSubmit={this.handleExplore}>
           <Form.Label>Pick a City</Form.Label>
@@ -106,7 +123,7 @@ class App extends React.Component {
           <Button type="submit">Explore!</Button>
         </Form>
         <Weather
-          date={this.state.datetime}
+          date={this.state.date}
           description={this.state.description}
           forecast={this.state.forecast}
           error={this.state.error}
@@ -114,6 +131,8 @@ class App extends React.Component {
           lat={this.state.lat}
           lon={this.state.lon}
           mapImg={this.state.mapImg}
+          displayName={this.state.displayName}
+
         />
         <Movies
           movieTitles={this.state.movieTitles}
