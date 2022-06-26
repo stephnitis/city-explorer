@@ -1,7 +1,5 @@
 import React from 'react';
 import Alert from 'react-bootstrap/Alert'
-import ListGroup from 'react-bootstrap/ListGroup';
-import Image from 'react-bootstrap/Image';
 import Container  from 'react-bootstrap/Container';
 import { Card } from 'react-bootstrap';
 
@@ -28,7 +26,6 @@ class Weather extends React.Component {
               <Card.Header className='mb-3 bg-white'>{this.props.displayName}
               </Card.Header>
             <Card.Img 
-              border="light"
               className='fluid p-3'
               src={this.props.mapImg}
               alt={this.props.displayName}

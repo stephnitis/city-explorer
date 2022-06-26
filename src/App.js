@@ -2,11 +2,10 @@ import React from 'react';
 import axios from 'axios';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import Image from 'react-bootstrap/Image'
-import Alert from 'react-bootstrap/Alert'
-import ListGroup from 'react-bootstrap/ListGroup';
 import './App.css';
-// import Container from 'react-bootstrap/Container';
+import Movies from './components/Movies';
+import Weather from './components/Weather.js';
+import { Container } from 'react-bootstrap';
 // import Map from './Map.js';
 
 class App extends React.Component {
@@ -20,7 +19,12 @@ class App extends React.Component {
       errorMsg: '',
       lat: '',
       lon: '',
-      mapImg: ''
+      mapImg: '',
+      // datetime: '',
+      // description: '',
+      showWeather: false,
+      weather: [],
+      movieTitles: [],
     }
   }
 
@@ -32,72 +36,100 @@ class App extends React.Component {
 
   handleExplore = async (event) => {
     event.preventDefault();
-    try{
-    let url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.searchQuery}&format=json`;
-    let cityInput = await axios.get(url);
-    console.log(cityInput.data)
-    let mapImg = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${cityInput.data[0].lat},${cityInput.data[0].lon}&zoom=13`;
-    this.setState({
-      cityInput: cityInput.data[0],
-      displayName: cityInput.data[0].display_name,
-      lat: cityInput.data[0].lat,
-      lon: cityInput.data[0].lon,
-      mapImg: mapImg,
-    });
+    try {
+      let url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.searchQuery}&format=json`;
+      let cityInput = await axios.get(url);
+
+
+      let mapImg = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${cityInput.data[0].lat},${cityInput.data[0].lon}&zoom=13`;
+
+      let weatherURL = `${process.env.REACT_APP_SERVER}/weather?lat=${cityInput.data[0].lat}&lon=${cityInput.data[0].lon}`;
+
+      let weather = await axios.get(weatherURL);
+ 
+      let movieURL = `${process.env.REACT_APP_SERVER}/movies?searchQuery=${this.state.searchQuery}`;
+      let movieTitles = await axios.get(movieURL);
+      console.log('movie titles', movieTitles);
+
+      this.setState({
+        cityInput: cityInput.data[0],
+        displayName: cityInput.data[0].display_name,
+        lat: cityInput.data[0].lat,
+        lon: cityInput.data[0].lon,
+        mapImg: mapImg,
+        weather: weather.data,
+        date: weather.data[0].datetime,
+        forecast: weather.data[0].description,
+        showWeather: true,
+        movieTitles: movieTitles.data,
+      });
+
     } catch (error) {
       console.log('error', error)
       this.setState({
         error: true,
-        errorMsg: `Error: ${error.message}. Please Refresh & Try Again.`      
+        errorMsg: `Error: ${error.message}. Please Refresh & Try Again.`
       })
-    } 
-    this.handleGetWeather();
+    }
+    // this.handleGetWeather();
   }
 
-  handleGetWeather = async () => {
-    let url = `http://localhost:3001/weatherData?searchQuery=${this.state.searchQuery}`
-    
-    try{
-      let weatherData = await axios.get(url);
-      console.log(weatherData.data);
-    } catch (error) {
-      console.log(error);
-  
-    }
-  }
+
+  // handleGetWeather = async () => {
+  //   let url = `http://localhost:3001/weatherData?searchQuery=${this.state.searchQuery}`
+
+  //   try{
+  //     let weatherData = await axios.get(url);
+  //     console.log('weather:', weatherData.data);
+  //     this.setState({
+  //       datetime: weatherData.data[0].datetime,
+  //       description: weatherData.data[1].description,
+  //     })
+  //   } catch (error) {
+  //     console.log(error);
+  //     this.setState({
+  //       error: true,
+  //       errorMsg: `Error: ${error.message}. No access to this data.`      
+  //     })  
+  //   }
+  // }
+
 
   render() {
-    // console.log('cityInput:', this.state.cityInput);
-
+ 
     return (
       <>
-      <h1>City Explorer</h1>
-        <Form onSubmit={this.handleExplore}>
-          <Form.Label>Pick a City</Form.Label>
-          <Form.Control type="text" onInput={this.handleCityInput} />
-          <Button type="submit">Explore!</Button>
+        <div class="font-effect-neon">
+        <h1>City Explorer</h1></div>
+        <Container className="d-flex align-items-center justify-content-center text-center">
+        <Form 
+        
+        onSubmit={this.handleExplore}>
+          <Form.Control
+          className='mb-3 mt-3'
+          box-sizing='border-box'
+          type="text" 
+          onInput={this.handleCityInput}
+          placeholder="Enter City Name" />
+          <Button className='mb-3' variant="outline-dark" type="submit">Explore!</Button>
         </Form>
-        {this.state.error === true
-          ? <Alert>{this.state.errorMsg}</Alert>
-          : 
-        <> 
-        <ListGroup variant="success"> 
-          <ListGroup.Item>City: {this.state.displayName}
-          </ListGroup.Item>
-          <ListGroup.Item>Latitude: {this.state.lat}
-          </ListGroup.Item>
-          <ListGroup.Item>Longitude: {this.state.lon}          
-          </ListGroup.Item>
-        </ListGroup>
-        <Image 
-        src={this.state.mapImg}
-        alt={this.state.displayName}>
-        </Image>
-     </>}
+        </Container>
+        <Weather
+          date={this.state.date}
+          description={this.state.description}
+          forecast={this.state.forecast}
+          error={this.state.error}
+          errorMsg={this.state.errorMsg}
+          lat={this.state.lat}
+          lon={this.state.lon}
+          mapImg={this.state.mapImg}
+          displayName={this.state.displayName}
+        />
+        <Movies
+          movieTitles={this.state.movieTitles}
+        />
       </>
-
     );
-
   }
 }
 
