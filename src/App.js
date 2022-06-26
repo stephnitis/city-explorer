@@ -115,16 +115,8 @@ class App extends React.Component {
               placeholder="Enter City Name" />
             <Button className='mb-3' variant="outline-dark" type="submit">Explore!</Button>
           </Form>
-
         </Container>
-        <Weather
-          date={this.state.date}
-        <h1>City Explorer</h1>
-        <Form onSubmit={this.handleExplore}>
-          <Form.Label>Pick a City</Form.Label>
-          <Form.Control type="text" onInput={this.handleCityInput} />
-          <Button type="submit">Explore!</Button>
-        </Form>
+
         <Weather
           date={this.state.date}
           description={this.state.description}
